@@ -214,7 +214,9 @@ class Win:
         return img.crop((int(x), int(y), int(x + w), int(y + h)))
 
     def titlebar(self, h=34, scale=3, psm=6, lang=None):
-        """标题栏文字。小字必须 scale=3 + psm=6（scale=2 会把「选项」读成「选页」）。"""
+        """标题栏文字。小字必须 scale=3 + psm=6（scale=2 会把「选项」读成「选页」）。
+        做判据时挑**同一行里最容易被认出来的字**，多个候选用 or 兜底：实测通达信标题栏
+        「公式」比「选项」稳得多（「选项」怎么放大都常被读成「选页」）。"""
         return ocr(self.shot(box=(0, 0, self.geom()[2], h)), scale=scale, psm=psm, lang=lang)
 
     def is_it(self, box=(0, 0, 400, 34), must=(), must_not=(), **ocr_kw):
